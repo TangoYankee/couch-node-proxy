@@ -5,7 +5,7 @@
         "module": "commonjs",
         "noImplicitAny": true,
         "removeComments": false,
-        "strictNullChecks": true
+        "strictNullChecks": true,
     },
     "include": [
         "src/**/*"

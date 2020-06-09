@@ -1,10 +1,8 @@
-// import * as http from 'http'
-
 export const getGreeting = (): string => {
   return 'Hello, Test!'
 }
 
-export const requestHandler = (req:Request, res:Response):string => {
+export const requestHandler = (req: Request, res: Response): string => {
   if (req.url === '/') {
     return 'welcome home'
   } else {
