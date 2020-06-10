@@ -17,7 +17,8 @@ describe('route requests', () => {
   })
   var res: Response = httpMocks.createResponse()
 
-  it('should get home string', () => {
-    expect(requestHandler(req, res)).toBe('welcome home')
+  it('should hit the couchdb through the route handler', async () => {
+    const message = await requestHandler(req, res)
+    expect(message).toBe('Welcome')
   })
 })

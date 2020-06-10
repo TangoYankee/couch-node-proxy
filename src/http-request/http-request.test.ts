@@ -1,17 +1,12 @@
-import { RequestOptions } from 'http'
-import { httpRequest } from './http-request'
-import { HttpMethod } from './http-request.model'
+import { HttpRequest } from './http-request'
+import { Method } from './http-request.model'
 
 describe('makes an initial request to couch server', () => {
-  const options = <RequestOptions>{
-    hostname: 'localhost',
-    port: 5984,
-    path: '/',
-    method: HttpMethod.GET
-  }
-
   it('should be welcomed by locally running couch server', async () => {
-    const body: any = await httpRequest(options)
+    const path:string = '/'
+    const method:string = Method.GET
+    const httpRequest = new HttpRequest(path, method)
+    const body: any = await httpRequest.getRequest()
     expect(body.couchdb).toBe('Welcome')
   })
 })
