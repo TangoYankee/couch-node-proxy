@@ -23,10 +23,10 @@ export class HttpRequest {
   }
 
   public getRequest () {
-    return HttpRequest.request(this.options(), this.postData)
+    return HttpRequest.getRequest(this.options(), this.postData)
   }
 
-  public static request (options: http.RequestOptions, postData?: string) {
+  public static getRequest (options: http.RequestOptions, postData?: string) {
     return new Promise((resolve, reject) => {
       var req = http.request((options), (res: http.IncomingMessage) => {
         const statusCode: number = res.statusCode!
