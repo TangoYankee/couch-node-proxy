@@ -39,8 +39,7 @@ export class HttpRequest {
         })
         res.on('end', () => {
           try {
-            const bodyJSON = JSON.parse(Buffer.concat(body).toString())
-            resolve(bodyJSON)
+            resolve(Buffer.concat(body).toString())
           } catch (e) {
             reject(e)
           }

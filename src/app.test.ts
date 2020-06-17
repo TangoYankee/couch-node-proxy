@@ -1,13 +1,14 @@
 import { requestHandler } from './app'
 import * as httpMocks from 'node-mocks-http'
+import * as http from 'http'
 
-const bodyJSON: any = { couchdb: 'Welcome' }
+let body: string
 jest.mock('./http-request/http-request', () => {
   return {
     HttpRequest: (url: string, method: string) => {
       return {
         getRequest: jest.fn().mockImplementation(() => {
-          return bodyJSON
+          return body
         })
       }
     }
@@ -15,10 +16,19 @@ jest.mock('./http-request/http-request', () => {
 })
 
 describe('request handler', () => {
-  let req: Request
-  const res: Response = httpMocks.createResponse()
+  let req: http.IncomingMessage
+  let res: any
+
+  beforeEach(() =>{
+    res = httpMocks.createResponse()
+  })
+
+  afterEach(() =>{
+    res = undefined
+  })
 
   it('should hit the home route', async () => {
+    body = '{ "couchdb": "Welcome", "version": "3.1.0"}'
     req = httpMocks.createRequest({
       method: 'GET',
       url: '/',
@@ -27,8 +37,10 @@ describe('request handler', () => {
       }
     })
 
-    const message = await requestHandler(req, res)
-    expect(message).toBe('Welcome')
+    await requestHandler(req, res)
+    const data = res._getJSONData()
+    expect(res.statusCode).toBe(200)
+    expect(data.couchdb).toBe('Welcome')
   })
 
   it('should hit the go away route', async () => {
@@ -39,7 +51,9 @@ describe('request handler', () => {
         host: 'localhost:8000'
       }
     })
-    const message = await requestHandler(req, res)
-    expect(message).toBe('go away')
+    await requestHandler(req, res)
+    const data = res._getJSONData()
+    expect(res.statusCode).toBe(401)
+    expect(data.message).toBe('go away')
   })
 })
