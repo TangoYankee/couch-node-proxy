@@ -19,11 +19,11 @@ describe('request handler', () => {
   let req: http.IncomingMessage
   let res: any
 
-  beforeEach(() =>{
+  beforeEach(() => {
     res = httpMocks.createResponse()
   })
 
-  afterEach(() =>{
+  afterEach(() => {
     res = undefined
   })
 

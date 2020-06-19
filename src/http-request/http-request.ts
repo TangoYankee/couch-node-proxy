@@ -26,7 +26,7 @@ export class HttpRequest {
     return HttpRequest.getRequest(this.options(), this.postData)
   }
 
-  public static getRequest (options: http.RequestOptions, postData?: string) {
+  public static getRequest (options: http.RequestOptions, postData?: string):any {
     return new Promise((resolve, reject) => {
       var req = http.request((options), (res: http.IncomingMessage) => {
         var body: Array<Uint8Array> = []
@@ -35,7 +35,7 @@ export class HttpRequest {
         })
         res.on('end', () => {
           try {
-            resolve(Buffer.concat(body).toString())
+            resolve([res.headers, Buffer.concat(body).toString()])
           } catch (e) {
             reject(e)
           }

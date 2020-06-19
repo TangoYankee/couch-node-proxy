@@ -1,0 +1,1 @@
+export COUCHDB_SERVER=''

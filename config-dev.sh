@@ -1,1 +1,0 @@
-export COUCHDB_SERVER='localhost:5984'
